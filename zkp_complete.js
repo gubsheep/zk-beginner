@@ -7,7 +7,7 @@ function dLogProof(x, g, p, b) {
   // x: int
   // g: int
   // p: int
-  // return: [array[int], array[int]], each of length PARALLELS
+  // return: [int, int]
   // ZK proof of knowledge of x such that g^x = y mod p
   var r = Math.floor(Math.random() * (p - 1));
   const gBig = bigInt(g);
@@ -21,8 +21,8 @@ function verify(y, g, p, t, s, b) {
   // y: int
   // g: int
   // p: int
-  // t: array[int] of length PARALLELS
-  // s: array[int] of length PARALLELS
+  // t: int
+  // s: int
   // Verify ZK proof (t,s) of knowledge x such that g^x = y mod p
   const gBig = bigInt(g);
   const yBig = bigInt(y);
@@ -43,6 +43,8 @@ function test() {
   const y = 22;
   // Let's prove we know x such that g^x = y mod p
 
+  // challenge bit - in a real interactive ZKP this would be passed in after
+  // verifier produces t (but this will make it easier for us to do non-interactivity)
   const b = Math.random() > 0.5 ? 1 : 0;
   proof = dLogProof(x, g, p, b);
   t = proof[0];
